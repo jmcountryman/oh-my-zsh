@@ -44,6 +44,37 @@ if [[ "$OSTYPE" = darwin* ]] ; then
     fi
   }
 
+  function charge_time_remaining() {
+    local smart_battery_status="$(ioreg -rc "AppleSmartBattery")"
+    if [[ $(echo $smart_battery_status | grep -c '^.*"ExternalConnected"\ =\ Yes') -eq 1 ]] ; then
+      timeremaining=$(echo $smart_battery_status | grep '^.*"AvgTimeToFull"\ =\ ' | sed -e 's/^.*"AvgTimeToFull"\ =\ //')
+      if [ $timeremaining -gt 720 ] ; then
+        echo "::"
+      else
+        echo "~%D{$((timeremaining / 60)):$((timeremaining % 60))}"
+      fi
+    else
+      echo "∞"
+    fi
+  }
+
+  function battery_status_prompt() {
+    if ($(plugged_in)) then
+      color='green'
+      echo "[%{$fg[$color]%}🔋 Charging %{$reset_color%}$(charge_time_remaining)]"
+    else
+      b=$(battery_pct_remaining)
+      if [ $b -gt 50 ] ; then
+        color='green'
+      elif [ $b -gt 20 ] ; then
+        color='yellow'
+      else
+        color='red'
+      fi
+      echo "[%{$fg[$color]%}🔋 $(battery_pct_remaining)%%%{$reset_color%} $(battery_time_remaining) ]"
+    fi
+  }
+
   function battery_pct_prompt () {
     if [[ $(ioreg -rc AppleSmartBattery | grep -c '^.*"ExternalConnected"\ =\ No') -eq 1 ]] ; then
       b=$(battery_pct_remaining)
@@ -54,7 +85,7 @@ if [[ "$OSTYPE" = darwin* ]] ; then
       else
         color='red'
       fi
-      echo "%{$fg[$color]%}[$(battery_pct_remaining)%%]%{$reset_color%}"
+      echo "%{$fg[$color]%}[$b%%]%{$reset_color%}"
     else
       echo "∞"
     fi
@@ -91,7 +122,7 @@ elif [[ $(uname) == "Linux"  ]] ; then
   }
 
   function battery_pct_prompt() {
-    b=$(battery_pct_remaining) 
+    b=$(battery_pct_remaining)
     if [[ $(acpi 2&>/dev/null | grep -c '^Battery.*Discharging') -gt 0 ]] ; then
       if [ $b -gt 50 ] ; then
         color='green'
