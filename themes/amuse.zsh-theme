@@ -8,15 +8,17 @@ rbenv_version() {
   rbenv version 2>/dev/null | awk '{print $1}'
 }
 
-PROMPT='
-%{$fg_bold[green]%}${PWD/#$HOME/~}%{$reset_color%}$(git_prompt_info) ⌚ %{$fg_bold[red]%}%*%{$reset_color%}
-%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ %s)%{$reset_color%} '
 
-# Must use Powerline font, for \uE0A0 to render.
-ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[magenta]%}\uE0A0 "
+PROMPT='
+%{$fg_bold[green]%}${PWD/#$HOME/~}%{$reset_color%}%{$reset_color%}$(git_prompt_info)%{$reset_color%}
+$(virtualenv_prompt_info) %(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ %s)%{$reset_color%} '
+
+RPROMPT='⌚ %{$fg_bold[red]%}%*%{$reset_color%}'
+
+ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[magenta]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}!"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[green]%}?"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-RPROMPT='%{$fg_bold[red]%}$(rvm_current)%{$reset_color%}'
+#RPROMPT='%{$fg_bold[red]%}$(rvm_current)%{$reset_color%}'
