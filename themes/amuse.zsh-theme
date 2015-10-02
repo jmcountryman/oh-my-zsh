@@ -17,8 +17,8 @@ RPROMPT='⌚ %{$fg_bold[red]%}%*%{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[magenta]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}!"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[green]%}?"
-ZSH_THEME_GIT_PROMPT_CLEAN=""
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg_bold[red]%} ✘"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg_bold[yellow]%} ?"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%} ✔"
 
 #RPROMPT='%{$fg_bold[red]%}$(rvm_current)%{$reset_color%}'
