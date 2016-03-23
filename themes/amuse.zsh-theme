@@ -15,7 +15,7 @@ $(virtualenv_prompt_info) %(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ %s)%{
 
 RPROMPT='⌚ %{$fg_bold[red]%}%*%{$reset_color%}'
 
-ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[magenta]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[blue]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg_bold[red]%} ✘"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg_bold[yellow]%} ?"
